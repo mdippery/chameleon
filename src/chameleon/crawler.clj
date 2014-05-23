@@ -19,10 +19,10 @@
    :reputation (:rep user-map)})
 
 (defn update-user! [user-map]
-  (mc/update-by-id db/db
-                   "users"
-                   {:user-id (:user-id user-map)}
-                   {:display_name (:display-name user-map)}))
+  (mc/update db/db
+             "users"
+             {:_id (:user-id user-map)}
+             {:display_name (:display-name user-map)}))
 
 (defn create-sample! [user-map]
   (mc/insert db/db "samples" (create-sample-document user-map)))
