@@ -9,4 +9,6 @@
                  [com.novemberain/monger "2.0.0-rc1"]]
   :main ^:skip-aot chameleon.core
   :target-path "target/%s"
+  :jar-name "chameleon.jar"
+  :uberjar-name "chameleon-standalone.jar"
   :profiles {:uberjar {:aot :all}})
