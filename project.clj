@@ -5,7 +5,8 @@
             :url "http://opensource.org/licenses/BSD-3-Clause"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [clj-http "0.6.3"]
-                 [org.clojure/data.json "0.2.4"]]
+                 [org.clojure/data.json "0.2.4"]
+                 [com.novemberain/monger "2.0.0-rc1"]]
   :main ^:skip-aot chameleon.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
