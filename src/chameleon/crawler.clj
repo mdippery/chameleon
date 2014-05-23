@@ -28,7 +28,7 @@
   (mc/insert db/db "samples" (create-sample-document user-map)))
 
 (defn update-users! [user-maps]
-  (map update-user! user-maps))
+  (dorun (map update-user! user-maps)))
 
 (defn insert-samples! [user-maps]
-  (map create-sample! user-maps))
+  (dorun (map create-sample! user-maps)))
