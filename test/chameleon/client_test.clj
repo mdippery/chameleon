@@ -1,5 +1,4 @@
 (ns chameleon.client-test
-
   (:require [clojure.test :refer :all]
             [chameleon.client :refer :all]))
 
