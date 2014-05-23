@@ -1,36 +1,33 @@
-# chameleon
+# Chameleon
 
-FIXME: description
+Chameleon is a simple service for sampling reputation from
+[Stack Overflow](http://stackoverflow.com). It takes a list of users
+from a MongoDB collection, collects those users' reputation scores,
+and saves them back into a MongoDB collection.
 
-## Installation
+## Prerequisites
 
-Download from http://example.com/FIXME.
+1. [Leiningen](http://leiningen.org)
+2. [MongoDB](http://www.mongodb.org), running on your local machine.
 
 ## Usage
 
-FIXME: explanation
+1. Build the Jar:
 
-    $ java -jar chameleon-0.1.0-standalone.jar [args]
+        $ lein uberjar
 
-## Options
+2. Create a MongoDB database called `chameleon`.
 
-FIXME: listing of options this app accepts.
+3. In the `chameleon` database, create a collection called `users`.
 
-## Examples
+4. Populate the `users` collection with users whose reputation you would
+   like to record, in the following format:
 
-...
+        {_id: <stack overflow user id>}
 
-### Bugs
+5. Run the Jar file:
 
-...
+        $ java -jar target/chameleon-0.1.0-standalone.jar
 
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2014 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+You will probably want to run the program as a cron task, to sample
+reputation periodically.
