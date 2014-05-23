@@ -1,7 +1,9 @@
 (ns chameleon.core
+  (:require [chameleon.users :as users]
+            [chameleon.crawler :as crawler])
   (:gen-class))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(defn -main [& args]
+  (let [user-maps (crawler/crawl-users users/subject-ids)]
+    (crawler/update-users! user-maps)
+    (crawler/insert-samples! user-maps)))
