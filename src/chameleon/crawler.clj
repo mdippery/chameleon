@@ -4,11 +4,16 @@
             [chameleon.utils :as utils]
             [monger.collection :as mc]))
 
+(defn create-user-map [user-id]
+  ; We're actually making two calls to the Stack Overflow API
+  ; here -- should find a way to save the data from one call
+  ; and re-use it.
+  {:user-id user-id,
+   :display-name (client/display-name user-id),
+   :rep (client/rep user-id)})
+
 (defn crawl-users [user-ids]
-  (map (fn [uid] {:user-id uid,
-                  :display-name (client/display-name uid),
-                  :rep (client/rep uid)})
-       user-ids))
+  (map create-user-map user-ids))
 
 (defn create-user-document [user-map]
   {:_id (:user-id user-map), :display_name (:display-name user-map)})
