@@ -1,6 +1,6 @@
-(ns chameleon.client)
-(require '[clj-http.client :as client])
-(require '[clojure.data.json :as json])
+(ns chameleon.client
+  (:require [clj-http.client :as client])
+  (:require [clojure.data.json :as json]))
 
 (defn url [user-id]
   (str "http://api.stackexchange.com/2.2/users/" user-id "?site=stackoverflow"))
