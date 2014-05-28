@@ -3,8 +3,8 @@
             [monger.core :as mg]))
 
 
-(def db-url (utils/env "CHAMELEON_MONGODB_URL" "mongodb://localhost:27017/chameleon"))
-
 (def db
-  (let [conn-and-db (mg/connect-via-uri db-url)]
+  (let [default-db-url "mongodb://localhost:27017/chameleon"
+        db-url (utils/env "CHAMELEON_MONGODB_URL" default-db-url)
+        conn-and-db (mg/connect-via-uri db-url)]
     (:db conn-and-db)))

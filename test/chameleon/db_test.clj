@@ -2,5 +2,7 @@
   (:require [clojure.test :refer :all]
             [chameleon.db :refer :all]))
 
-(deftest test-db-url
-  (is (= "mongodb://localhost:27017/chameleon" db-url)))
+(deftest test-db
+  (let [db-name (.getName db)]
+    (is (instance? com.mongodb.DBApiLayer db))
+    (is (= "chameleon" db-name))))
