@@ -1,27 +1,43 @@
 (ns chameleon.client-test
   (:require [clojure.test :refer :all]
+            [clj-http.client :as client]
             [chameleon.client :refer :all]))
+
+(defn stub-resp [user-id]
+  (let [data-file (str "test/data/" user-id ".json")]
+    {:body (slurp data-file)}))
 
 (deftest test-url
   (is (= "http://api.stackexchange.com/2.2/users/28804?site=stackoverflow" (url 28804))))
 
 (deftest test-resp
-  (is (instance? clojure.lang.PersistentArrayMap (resp 28804))))
+  (with-redefs [resp stub-resp]
+    (contains? (resp 28804) :body)))
 
 (deftest test-body
-  (is (instance? clojure.lang.PersistentArrayMap (body 28804))))
+  (with-redefs [resp stub-resp]
+    (let [b (body 28804)]
+      (contains? b :items))))
 
 (deftest test-items
-  (is (instance? clojure.lang.PersistentVector (items 28804))))
+  (with-redefs [resp stub-resp]
+    (let [i (items 28804)]
+      (is (= 1 (count i))))))
 
 (deftest test-user-data
-  (is (instance? clojure.lang.PersistentHashMap (user-data 28804))))
+  (with-redefs [resp stub-resp]
+    (let [d (user-data 28804)]
+      (is (= 21 (count d))))))
 
 (deftest test-user-key
-  (is (= 28804 (user-key 28804 "user_id"))))
+  (with-redefs [resp stub-resp]
+    (is (= 28804 (user-key 28804 "user_id")))
+    (is (= "San Francisco, CA" (user-key 28804 "location")))))
 
 (deftest test-display-name
-  (is (= "mipadi" (display-name 28804))))
+  (with-redefs [resp stub-resp]
+    (is (= "mipadi" (display-name 28804)))))
 
 (deftest test-reputation
-  (is (instance? Long (rep 28804))))
+  (with-redefs [resp stub-resp]
+    (is (instance? Long (rep 28804)))))
