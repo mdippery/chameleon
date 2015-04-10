@@ -27,7 +27,7 @@ and saves them back into a MongoDB collection.
 
 5. Run the Jar file:
 
-        $ java -jar target/chameleon-standalone.jar
+        $ java -jar target/uberjar/chameleon-standalone.jar
 
 You will probably want to run the program as a cron task, to sample
 reputation periodically.
