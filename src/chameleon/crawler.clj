@@ -37,7 +37,7 @@
   (mc/upsert db/db
              "samples"
              (create-query-document user-map)
-             (create-sample-document)
+             (create-sample-document user-map)
              {:upsert true}))
 
 (defn update-users! [user-maps]
