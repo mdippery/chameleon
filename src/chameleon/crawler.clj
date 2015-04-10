@@ -19,9 +19,13 @@
   {:_id (:user-id user-map), :display_name (:display-name user-map)})
 
 (defn create-sample-document [user-map]
-  {:user (:user-id user-map),
-   :timestamp (utils/utcnow),
-   :reputation (:rep user-map)})
+  (let [hours (utils/hours-since-midnight (utils/utcnow))
+        stats {(str "reputation." hours) (:rep user-map)}]
+    {"$set" stats}))
+
+(defn create-query-document [user-map]
+  {:user (:user-id user-map)
+   :timestamp (utils/midnight (utils/utcnow))})
 
 (defn update-user! [user-map]
   (mc/update db/db
@@ -30,7 +34,11 @@
              {:display_name (:display-name user-map)}))
 
 (defn create-sample! [user-map]
-  (mc/insert db/db "samples" (create-sample-document user-map)))
+  (mc/upsert db/db
+             "samples"
+             (create-query-document user-map)
+             (create-sample-document)
+             {:upsert true}))
 
 (defn update-users! [user-maps]
   (doseq [u user-maps] (update-user! u)))
